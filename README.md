@@ -2,6 +2,10 @@
 
 This is the EC2-to-SSH tool.
 
+## Latest version
+
+The latest is `pre-alpha`.
+
 ## Motivation
 
 Got tired of updating my SSH configuration over and over again. This here simply reads out all *running* EC2 instances
