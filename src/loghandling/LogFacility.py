@@ -1,11 +1,12 @@
 import logging
+import os
 
 class LogFacility(object):
     log_levels   = ['DEBUG', 'INFO', 'WARNING', 'ERROR']
 
     logger       = 'main'
     log_format   = '%(asctime)-15s %(name)s %(levelname)s %(message)s'
-    log_dir      = './log'
+    log_dir      = os.path.join(os.environ['HOME'], '.ec2ssh')
     log_filename = '{0}.log'.format(logger)
 
 

@@ -3,3 +3,4 @@
 conf/settings.cfg
 *.pyc
 log/main.log
+*.egg-info/

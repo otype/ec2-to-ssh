@@ -3,6 +3,6 @@
 CWD=`dirname $0`
 PYTHON=`which python`
 
-$PYTHON $CWD/src/ec2-instances.py
+$PYTHON $CWD/ec2-instances.py
 
 
