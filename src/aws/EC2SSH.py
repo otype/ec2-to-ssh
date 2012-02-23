@@ -1,15 +1,14 @@
 import boto.ec2
 import sys
-from Messages import err
 from loghandling.LogFacility import LogFacility
+from messages.Messages import err
+from settings.Settings import Settings
 
 ####################################################################
 # CONFIGURATION PARAMETERS
 ####################################################################
 
 # Logger
-from settings.Settings import Settings
-
 log = LogFacility().get_logger()
 
 # Global settings dictionary

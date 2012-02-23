@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 import sys
-from Messages import  err
 from aws.EC2SSH import EC2SSH
 from loghandling.LogFacility import LogFacility
+from messages.Messages import err
+from settings.Settings import Settings
 
 ####################################################################
 #
@@ -11,8 +12,6 @@ from loghandling.LogFacility import LogFacility
 ####################################################################
 
 # Logger
-from settings.Settings import Settings
-
 log = LogFacility().get_logger()
 
 # Global settings dictionary
@@ -26,7 +25,6 @@ DEBUG = SETTINGS['DEBUGGING']
 # FUNCTIONS
 #
 ####################################################################
-
 
 def main():
     if SETTINGS['EC2_AWS_ACCESS_KEY'] == '':
