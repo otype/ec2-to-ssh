@@ -11,16 +11,12 @@ The latest is `0.1-pre_alpha`.
 Got tired of updating my SSH configuration over and over again. This here simply reads out all *running* EC2 instances
 and prints them out to screen.
 
-## Setting up ec2-to-ssh
+## Installing ec2-to-ssh
 
-1. Install via `pip`:
+Install via `pip`:
 
 	$ easy_install pip
 	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.1-pre_alpha
-
-2. Clone this project and simply run:
-
-	$ python setup.py install
 
 ## Configuring ec2-to-ssh
 
