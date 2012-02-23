@@ -13,7 +13,12 @@ and prints them out to screen.
 
 ## Setting up ec2-to-ssh
 
-Simply run
+1. Install via `pip`:
+
+	$ easy_install pip
+	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.1-pre_alpha
+
+2. Clone this project and simply run:
 
 	$ python setup.py install
 
