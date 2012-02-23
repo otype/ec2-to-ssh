@@ -30,4 +30,4 @@ Option #2: Add your credentials to ~/.ec2ssh/settings.cfg
 '''
 
 err['ERR_CANNOT_CONNECT_TO_AWS'] = '''Cannot connect to AWS!'''
-
+err['ERR_NO_INSTANCES_FOUND'] = ''''No EC2 instances found! Make sure you are connecting to the right region!'''

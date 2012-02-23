@@ -1,8 +1,7 @@
 import os
-from settings.Settings import Settings
+from settings.EC2SSHSettings import EC2SSHSettings
 
-DEFAULT_CONFIG_FILE = os.path.join(os.environ['HOME'], '.ec2ssh/settings.cfg')
-CONFIG = Settings().read_configuration(DEFAULT_CONFIG_FILE)
+CONFIG = EC2SSHSettings().read_configuration()
 
 def initialize_settings():
     """
