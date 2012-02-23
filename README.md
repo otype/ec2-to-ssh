@@ -4,7 +4,7 @@ This is the EC2-to-SSH tool.
 
 ## Latest version
 
-The latest is `pre-alpha`.
+The latest is `0.1-pre_alpha`.
 
 ## Motivation
 
