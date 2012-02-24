@@ -3,7 +3,7 @@ EC2_AWS_ACCESS_KEY =
 EC2_AWS_SECRET_ACCESS_KEY = 
 
 [SSH_CONFIG]
-SSH_KEY = /Users/hgschmidt/.ssh/cloudcontrol_amazon_dev.pem
+SSH_KEY = /Users/hgschmidt/.ssh/id_rsa.pub
 #SSH_PORT = 22
 SSH_USER = ubuntu
 
