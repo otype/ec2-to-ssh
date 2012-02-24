@@ -11,6 +11,9 @@ import os
 from setuptools import find_packages
 import version
 
+if not os.path.exists(os.path.join(os.environ['HOME'], '.ec2ssh')):
+    os.mkdir(os.path.join(os.environ['HOME'], '.ec2ssh'), 0755)
+
 required = ['boto']
 
 extra_options = dict(
