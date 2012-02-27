@@ -31,7 +31,7 @@ setup(
     package_dir={'': 'src'},
     scripts=['ec2-to-ssh', 'src/ec2-instances.py'],
     data_files=[
-        (os.path.join(os.environ['HOME'], '.ec2ssh'), [os.path.join('conf','settings.cfg')])
+        (os.path.join(os.environ['HOME'], '.ec2ssh'), ['conf/settings.cfg'])
     ],
     download_url=DOWNLOAD_URL,
     license='Apache 2.0',
