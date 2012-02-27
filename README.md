@@ -54,7 +54,7 @@ Simply create a shell function and add that to your shell configuration file (e.
 
 		for f in ${HOME}/.ssh/config.*
 		do
-	        cat $f >> config
+	        cat $f >> ${HOME}/.ssh/config
 	    done
 	}
 
