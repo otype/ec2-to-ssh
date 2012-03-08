@@ -4,7 +4,7 @@ This is the EC2-to-SSH tool.
 
 ## Latest version
 
-The latest is `0.1.2-pre_alpha`.
+The latest is `0.1.3-pre_alpha`.
 
 ## Motivation
 
@@ -16,7 +16,7 @@ and prints them out to screen.
 Install via `pip`:
 
 	$ easy_install pip
-	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.1.2-pre_alpha
+	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.1.3-pre_alpha
 
 ## Configuring ec2-to-ssh
 
