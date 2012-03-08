@@ -27,10 +27,11 @@ setup(
     author_email='hgs@cloudcontrol.de',
     url='https://www.cloudcontrol.com',
     install_requires=required,
-    packages=find_packages(),
-    scripts=['ec2-to-ssh', 'ec2-instances.py'],
+    packages=find_packages('src'),
+    package_dir={'' : 'src'},
+    scripts=['src/ec2-to-ssh', 'src/ec2-instances.py'],
     data_files=[
-        (os.path.join(os.environ['HOME'], '.ec2ssh'), ['ec2_to_ssh/conf/settings.cfg'])
+        (os.path.join(os.environ['HOME'], '.ec2ssh'), ['src/ec2_to_ssh/conf/settings.cfg'])
     ],
     download_url=DOWNLOAD_URL,
     license='Apache 2.0',

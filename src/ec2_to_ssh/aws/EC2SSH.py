@@ -21,9 +21,9 @@
 
 import boto.ec2
 import sys
-from loghandling.LogFacility import LogFacility
-from messages.Messages import err
-from settings.Settings import Settings
+from ec2_to_ssh.loghandling.LogFacility import LogFacility
+from ec2_to_ssh.messages.Messages import err
+from ec2_to_ssh.settings.Settings import Settings
 
 ####################################################################
 # CONFIGURATION PARAMETERS
