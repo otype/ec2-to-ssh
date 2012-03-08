@@ -9,15 +9,35 @@
 from distutils.core import setup
 import os
 from setuptools import find_packages
+import sys
 import version
 
 required = ['boto']
 
+DOWNLOAD_URL = 'https://github.com/downloads/otype/ec2-to-ssh/ec2-too-ssh-{0}.tar.gz'.format(version.__version__)
+
+# Read the $HOME variable! Overwrite it if we're on Windows.
+HOME = os.getenv("HOME")
+if sys.platform == 'win32':
+    HOME = os.path.expanduser('~')
+
+def get_data_files():
+    """
+        We don't want to overwrite the ~/.ec2ssh/settings.cfg over and over again upon
+        update of EC2-TO-SSH. Instead, we should check if it already exists and, then,
+        install it if necessary.
+    """
+    configuration_file = os.path.join(HOME, '.ec2ssh/settings.cfg')
+    if os.path.exists(configuration_file):
+        print "Configuration file {0} found! Skipping creation!".format(configuration_file)
+        return []
+    return [(os.path.join(os.environ['HOME'], '.ec2ssh'), ['src/ec2_to_ssh/conf/settings.cfg'])]
+
+
+# Extra options can be set here without cluttering the setup() method.
 extra_options = dict(
     # Nothing
 )
-
-DOWNLOAD_URL = 'https://github.com/downloads/otype/ec2-to-ssh/ec2-too-ssh-{0}.tar.gz'.format(version.__version__)
 
 setup(
     name="ec2-to-ssh",
@@ -30,9 +50,7 @@ setup(
     packages=find_packages('src'),
     package_dir={'' : 'src'},
     scripts=['src/ec2-to-ssh', 'src/ec2-instances.py'],
-    data_files=[
-        (os.path.join(os.environ['HOME'], '.ec2ssh'), ['src/ec2_to_ssh/conf/settings.cfg'])
-    ],
+    data_files=get_data_files(),
     download_url=DOWNLOAD_URL,
     license='Apache 2.0',
     **extra_options

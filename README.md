@@ -4,7 +4,7 @@ This is the EC2-to-SSH tool.
 
 ## Latest version
 
-The latest is `0.1.4`.
+The latest is `0.2`.
 
 ## Motivation
 
@@ -16,7 +16,7 @@ and prints them out to screen.
 Install via `pip`:
 
 	$ easy_install pip
-	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.1.4
+	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.2
 
 ## Configuring ec2-to-ssh
 
@@ -63,3 +63,8 @@ Now, all I need to do before logging in into an EC2 instance is to call `update-
 *NOTE:* `ec2-to-ssh` needs to be in your path when calling `update-ssh` (which might not be if you are using `virtualenv`).
 
 This way I don't overwrite all my other SSH configurations as these are simply in different files (`~/.ssh/config.<filename>`).
+
+
+## TODO
+
+- Provide DEV, LIVE, STAGE section in `settings.cfg` so that different configurations can be managed
