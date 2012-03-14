@@ -38,7 +38,7 @@ If you like you can set a prefix for all hostnames of a given EC2 environment. E
 DEV environment, you would like all hostnames to start with "dev-". To accomplish this, simply add a prefix
 in the corresponding `settings.<ec2_env>.cfg` file
 
-    EC2_HOSTNAME_PREFIX = DEV
+    EC2_HOSTNAME_PREFIX = dev
 
 ## Using ec2-to-ssh
 
