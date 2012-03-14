@@ -25,6 +25,9 @@ from ec2_to_ssh.aws.EC2SSH import EC2SSH
 from ec2_to_ssh.loghandling.LogFacility import LogFacility
 from ec2_to_ssh.messages.Messages import err
 from ec2_to_ssh.settings.Settings import Settings
+from ec2_to_ssh.settings.SettingsKeys import DEBUGGING
+from ec2_to_ssh.settings.SettingsKeys import EC2_AWS_ACCESS_KEY
+from ec2_to_ssh.settings.SettingsKeys import EC2_AWS_SECRET_ACCESS_KEY
 
 ####################################################################
 #
@@ -39,7 +42,7 @@ log = LogFacility().get_logger()
 SETTINGS = Settings().settings
 
 # If set to True, additional debug messages will be printed out
-DEBUG = SETTINGS['DEBUGGING']
+DEBUG = SETTINGS[DEBUGGING]
 
 ####################################################################
 #
@@ -48,10 +51,13 @@ DEBUG = SETTINGS['DEBUGGING']
 ####################################################################
 
 def main():
-    if SETTINGS['EC2_AWS_ACCESS_KEY'] == '':
+    if SETTINGS[EC2_AWS_ACCESS_KEY] == '':
         sys.exit(err['ERR_NO_EC2_ACCESS_KEYS'])
 
-    ec2ssh = EC2SSH(SETTINGS['EC2_AWS_ACCESS_KEY'], SETTINGS['EC2_AWS_SECRET_ACCESS_KEY'])
+    ec2ssh = EC2SSH(
+        SETTINGS[EC2_AWS_ACCESS_KEY],
+        SETTINGS[EC2_AWS_SECRET_ACCESS_KEY]
+    )
 
     print ec2ssh.print_instances()
 

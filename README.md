@@ -4,7 +4,7 @@ This is the EC2-to-SSH tool.
 
 ## Latest version
 
-The latest is `0.2`.
+The latest is `0.3`.
 
 ## Motivation
 
@@ -16,25 +16,48 @@ and prints them out to screen.
 Install via `pip`:
 
 	$ easy_install pip
-	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.2
+	$ pip install git+ssh://git@github.com/otype/ec2-to-ssh.git@0.3
 
 ## Configuring ec2-to-ssh
 
-Before you can run `ec2-to-ssh` you must configure the configuration file `${HOME}/.ec2ssh/settings.cfg` and fill
- in appropriate values:
+Before you can run `ec2-to-ssh` you must configure the appropriate configuration files
+
+ * `${HOME}/.ec2ssh/settings.LIVE.cfg`
+ * `${HOME}/.ec2ssh/settings.DEV.cfg`
+ * `${HOME}/.ec2ssh/settings.STAGE.cfg`
+
+ and fill in appropriate values for the corresponding EC2 environment:
 
     [SSH_CONFIG]
     SSH_KEY = /Users/hgschmidt/.ssh/<your_ec2_ssh_key>
     SSH_PORT = 22
     SSH_USER = ubuntu
 
+ If you like you can set a prefix for all hostnames of a given EC2 environment. E.g. for your
+ DEV environment, you would like all hostnames to start with "dev-". Add a prefix in the corresponding
+ `settings.<ec2_env>.cfg` file
+
+    EC2_HOSTNAME_PREFIX = DEV
+
 ## Using ec2-to-ssh
 
-You can either set environment variables and call `ec2-to-ssh`:
+### Environments
 
-	$ EC2_ACCESS_KEY=ABCDEFGHIJK EC2_SECRET_ACCESS_KEY=ALONGSECRETKEY ec2-to-ssh
+You have 3 possible environments to choose:
 
-Or you can set your Access Keys in the configuration file `${HOME}/.ec2ssh/settings.cfg`:
+ 1. 'live'
+ 2. 'dev'
+ 3. 'stage'
+
+When calling `ec2-to-ssh` with one of the given environment will load the appropriate settings file.
+
+### Setting EC2 ACCESS/SECRET KEYS
+
+You can either set environment variables and call `ec2-to-ssh` with the corresponding EC2 environment:
+
+	$ EC2_ACCESS_KEY=ABCDEFGHIJK EC2_SECRET_ACCESS_KEY=ALONGSECRETKEY ec2-to-ssh dev
+
+Or you can set your Access Keys in the configuration file `${HOME}/.ec2ssh/settings.<ec2_env>.cfg`:
 
 	[EC2]
     EC2_AWS_ACCESS_KEY = <put_your_key_key>
@@ -46,8 +69,9 @@ Or you can set your Access Keys in the configuration file `${HOME}/.ec2ssh/setti
 Simply create a shell function and add that to your shell configuration file (e.g. `~/.bashrc`):
 
 	function update-ssh() {
-	    EC2_AWS_ACCESS_KEY=<LIVE_KEY> EC2_AWS_SECRET_ACCESS_KEY=<LIVE_SECRET_KEY> ec2-to-ssh > ${HOME}/.ssh/config.liveplatform
-	    EC2_AWS_ACCESS_KEY=<DEV_KEY> EC2_AWS_SECRET_ACCESS_KEY=<DEV_SECRET_KEY> ec2-to-ssh > ${HOME}/.ssh/config.devplatform
+	    EC2_AWS_ACCESS_KEY=<LIVE_KEY> EC2_AWS_SECRET_ACCESS_KEY=<LIVE_SECRET_KEY> ec2-to-ssh live > ${HOME}/.ssh/config.liveplatform
+	    EC2_AWS_ACCESS_KEY=<DEV_KEY> EC2_AWS_SECRET_ACCESS_KEY=<DEV_SECRET_KEY> ec2-to-ssh dev > ${HOME}/.ssh/config.devplatform
+	    EC2_AWS_ACCESS_KEY=<STAGE_KEY> EC2_AWS_SECRET_ACCESS_KEY=<STAGE_SECRET_KEY> ec2-to-ssh stage > ${HOME}/.ssh/config.stageplatform
 
 	    touch ${HOME}/.ssh/config
 	    mv ${HOME}/.ssh/config ${HOME}/.ssh/config_old

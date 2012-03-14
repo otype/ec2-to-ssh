@@ -19,4 +19,19 @@
 
 """
 
-__version__ = '0.3'
+DEFAULT_SSH_KEY             = '.ssh/id_rsa'
+DEFAULT_SSH_PORT            = '22'
+DEFAULT_SSH_USER            = 'ubuntu'
+
+SSH_CONFIG_SECTION          = 'SSH_CONFIG'
+SSH_KEY                     = 'SSH_KEY'
+SSH_PORT                    = 'SSH_PORT'
+SSH_USER                    = 'SSH_USER'
+
+EC2_SECTION                 = 'EC2'
+EC2_AWS_ACCESS_KEY          = 'EC2_AWS_ACCESS_KEY'
+EC2_AWS_SECRET_ACCESS_KEY   = 'EC2_AWS_SECRET_ACCESS_KEY'
+EC2_HOSTNAME_PREFIX         = 'EC2_HOSTNAME_PREFIX'
+
+DEBUG_SECTION               = 'DEBUG'
+DEBUGGING                   = 'DEBUGGING'

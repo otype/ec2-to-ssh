@@ -24,6 +24,7 @@ import sys
 from ec2_to_ssh.loghandling.LogFacility import LogFacility
 from ec2_to_ssh.messages.Messages import err
 from ec2_to_ssh.settings.Settings import Settings
+from ec2_to_ssh.settings.SettingsKeys import SSH_PORT, SSH_KEY, SSH_USER, EC2_HOSTNAME_PREFIX
 
 ####################################################################
 # CONFIGURATION PARAMETERS
@@ -47,7 +48,7 @@ class MissingAWSCredentialsException(Exception):
         return super(MissingAWSCredentialsException, self).__str__()
 
 
-class EC2SSH():
+class EC2SSH(object):
     # EC2 access keys
     ec2_aws_access_key = ''
     ec2_aws_secret_key = ''
@@ -106,9 +107,16 @@ class EC2SSH():
                 except KeyError:
                     continue
 
-                ssh_port = SETTINGS['ssh_port']
+                ssh_port = SETTINGS[SSH_PORT]
                 if name.startswith('lb-') or name.startswith('loadbalancer-'):
                     ssh_port = 2222
+
+                hostname = str(name).partition(' ')[0]
+                if SETTINGS[EC2_HOSTNAME_PREFIX] is not '':
+                    hostname = '{0}-{1}'.format(
+                        SETTINGS[EC2_HOSTNAME_PREFIX],
+                        hostname
+                    )
 
                 ssh_config += """
 Host {hostname}
@@ -117,11 +125,11 @@ Host {hostname}
   IdentityFile {id_file}
   User {user}
 """.format(
-                    hostname=str(name).partition(' ')[0],
+                    hostname=hostname,
                     public_dns_name=instance.public_dns_name,
                     ssh_port=ssh_port,
-                    id_file=SETTINGS['ssh_key_path'],
-                    user=SETTINGS['ssh_user']
+                    id_file=SETTINGS[SSH_KEY],
+                    user=SETTINGS[SSH_USER]
                 )
 
         return ssh_config

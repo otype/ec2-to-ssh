@@ -22,11 +22,11 @@
 import ConfigParser
 import os
 import sys
+from ec2_to_ssh.settings.SettingsKeys import *
 
+HOME = os.getenv('HOME')
 if sys.platform == 'win32':
     HOME = os.path.expanduser('~')
-else:
-    HOME = os.getenv("HOME")
 
 DEFAULT_CONFIGURATION_FILE = os.path.join(HOME, '.ec2ssh/settings.cfg')
 
@@ -67,35 +67,51 @@ class Settings(object):
         #noinspection PyDictCreation
         s = {}
 
-        s['ssh_key_path'] = self.config.get('SSH_CONFIG', 'SSH_KEY')
-        if s['ssh_key_path'] is None or not os.path.exists(s['ssh_key_path']):
-            s['ssh_key_path'] = os.path.join(os.environ['HOME'], '.ssh/id_rsa')
+        #
+        # Defaults
+        #
+        s[SSH_PORT] = DEFAULT_SSH_PORT
+        s[SSH_USER] = DEFAULT_SSH_USER
+        s[EC2_AWS_ACCESS_KEY] = ''
+        s[EC2_AWS_SECRET_ACCESS_KEY] = ''
+        s[EC2_HOSTNAME_PREFIX] = ''
+        s[DEBUGGING] = False
 
-        s['ssh_port'] = '22'
-        if self.config.has_option('SSH_CONFIG', 'SSH_PORT'):
-            s['ssh_port'] = self.config.get('SSH_CONFIG', 'SSH_PORT')
+        #
+        # SSH
+        #
+        s[SSH_KEY] = self.config.get(SSH_CONFIG_SECTION, SSH_KEY)
+        if s[SSH_KEY] is None or not os.path.exists(s[SSH_KEY]):
+            s[SSH_KEY] = os.path.join(HOME, DEFAULT_SSH_KEY)
 
-        s['ssh_user'] = 'ubuntu'
-        if self.config.has_option('SSH_CONFIG', 'SSH_USER'):
-            s['ssh_user'] = self.config.get('SSH_CONFIG', 'SSH_USER')
+        if self.config.has_option(SSH_CONFIG_SECTION, SSH_PORT):
+            s[SSH_PORT] = self.config.get(SSH_CONFIG_SECTION, SSH_PORT)
 
-        s['EC2_AWS_ACCESS_KEY'] = ''
-        if os.environ.has_key('EC2_AWS_ACCESS_KEY'):
-            s['EC2_AWS_ACCESS_KEY'] = os.environ['EC2_AWS_ACCESS_KEY']
+        if self.config.has_option(SSH_CONFIG_SECTION, SSH_USER):
+            s[SSH_USER] = self.config.get(SSH_CONFIG_SECTION, SSH_USER)
+
+        #
+        # EC2 ACCESS/SECRET KEYS
+        #
+        if os.environ.has_key(EC2_AWS_ACCESS_KEY):
+            s[EC2_AWS_ACCESS_KEY] = os.environ[EC2_AWS_ACCESS_KEY]
         else:
-            if self.config.has_option('EC2', 'EC2_AWS_ACCESS_KEY'):
-                s['EC2_AWS_ACCESS_KEY'] = self.config.get('EC2', 'EC2_AWS_ACCESS_KEY')
+            if self.config.has_option(EC2_SECTION, EC2_AWS_ACCESS_KEY):
+                s[EC2_AWS_ACCESS_KEY] = self.config.get(EC2_SECTION, EC2_AWS_ACCESS_KEY)
 
-        s['EC2_AWS_SECRET_ACCESS_KEY'] = ''
-        if os.environ.has_key('EC2_AWS_SECRET_ACCESS_KEY'):
-            s['EC2_AWS_SECRET_ACCESS_KEY'] = os.environ['EC2_AWS_SECRET_ACCESS_KEY']
+        if os.environ.has_key(EC2_AWS_SECRET_ACCESS_KEY):
+            s[EC2_AWS_SECRET_ACCESS_KEY] = os.environ[EC2_AWS_SECRET_ACCESS_KEY]
         else:
-            if self.config.has_option('EC2', 'EC2_AWS_SECRET_ACCESS_KEY'):
-                s['EC2_AWS_SECRET_ACCESS_KEY'] = self.config.get('EC2', 'EC2_AWS_SECRET_ACCESS_KEY')
+            if self.config.has_option(EC2_SECTION, EC2_AWS_SECRET_ACCESS_KEY):
+                s[EC2_AWS_SECRET_ACCESS_KEY] = self.config.get(EC2_SECTION, EC2_AWS_SECRET_ACCESS_KEY)
+        if self.config.has_option(EC2_SECTION, EC2_HOSTNAME_PREFIX):
+            s[EC2_HOSTNAME_PREFIX] = self.config.get(EC2_SECTION, EC2_HOSTNAME_PREFIX)
 
-        s['DEBUGGING'] = False
-        if self.config.has_option('DEBUG', 'DEBUGGING'):
-            s['DEBUGGING'] = self.config.get('DEBUG', 'DEBUGGING')
+        #
+        # DEBUG
+        #
+        if self.config.has_option(DEBUG_SECTION, DEBUGGING):
+            s[DEBUGGING] = self.config.get(DEBUG_SECTION, DEBUGGING)
 
         return s
 

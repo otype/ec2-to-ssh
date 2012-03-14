@@ -1,8 +1,50 @@
 #!/bin/bash
+set -e
 
-CWD=`dirname $0`
+if [[ $# -lt 1 ]]; then
+	echo "Missing EC2 env: {live, dev, stage}!"
+    exit 1
+fi
+
+# Store params from shell
+CMD=$0
+PARAMS=$1
+
+# Globals
+CWD=`dirname $CMD`
 PYTHON=`which python`
 
+function rotate_config() {
+	if [[ $# -lt 1 ]]; then
+		return 1
+	fi
+
+    ec2_env=$1
+
+    if [[ ! -f ${HOME}/.ec2ssh/settings.${ec2_env}.cfg ]]; then
+        return 1
+    fi
+
+	ln -sf ${HOME}/.ec2ssh/settings.${ec2_env}.cfg ${HOME}/.ec2ssh/settings.cfg
+	return $?
+}
+
+case "$PARAMS" in
+  live)
+        rotate_config "LIVE"
+        ;;
+  dev)
+        rotate_config "DEV"
+        ;;
+  stage)
+        rotate_config "STAGE"
+        ;;
+  *)
+        exit 1
+        ;;
+esac
+
 $PYTHON $CWD/ec2-instances.py
+exit 0
 
 
