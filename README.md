@@ -26,51 +26,58 @@ Before you can run `ec2-to-ssh` you must configure the appropriate configuration
  * `${HOME}/.ec2ssh/settings.DEV.cfg`
  * `${HOME}/.ec2ssh/settings.STAGE.cfg`
 
- and fill in appropriate values for the corresponding EC2 environment:
+and fill in appropriate values for the corresponding EC2 environment. E.g. setting the correct SSH-Key
+for the corresponding EC2 environment:
 
     [SSH_CONFIG]
     SSH_KEY = /Users/hgschmidt/.ssh/<your_ec2_ssh_key>
     SSH_PORT = 22
     SSH_USER = ubuntu
 
- If you like you can set a prefix for all hostnames of a given EC2 environment. E.g. for your
- DEV environment, you would like all hostnames to start with "dev-". Add a prefix in the corresponding
- `settings.<ec2_env>.cfg` file
+If you like you can set a prefix for all hostnames of a given EC2 environment. E.g. for your
+DEV environment, you would like all hostnames to start with "dev-". To accomplish this, simply add a prefix
+in the corresponding `settings.<ec2_env>.cfg` file
 
     EC2_HOSTNAME_PREFIX = DEV
 
 ## Using ec2-to-ssh
 
+Following descriptions gives instructions on how to use `ec2-to-ssh`.
+
 ### Environments
 
-You have 3 possible environments to choose:
+You have 3 possible environments to choose (add as parameter to `ec2-to-ssh`):
 
- 1. 'live'
- 2. 'dev'
- 3. 'stage'
+ 1. live
+ 2. dev
+ 3. stage
 
-When calling `ec2-to-ssh` with one of the given environment will load the appropriate settings file.
+Calling `ec2-to-ssh` with one of the given environment identifiers will load the appropriate settings file.
 
 ### Setting EC2 ACCESS/SECRET KEYS
 
-You can either set environment variables and call `ec2-to-ssh` with the corresponding EC2 environment:
+You can either set environment variables and, then, call `ec2-to-ssh` with the corresponding EC2 environment:
 
 	$ EC2_ACCESS_KEY=ABCDEFGHIJK EC2_SECRET_ACCESS_KEY=ALONGSECRETKEY ec2-to-ssh dev
 
-Or you can set your Access Keys in the configuration file `${HOME}/.ec2ssh/settings.<ec2_env>.cfg`:
+Or you can set your Access Keys in the configuration file. E.g. setting your EC2 credentials for your DEV
+environment will require changes in `${HOME}/.ec2ssh/settings.DEV.cfg`:
 
 	[EC2]
     EC2_AWS_ACCESS_KEY = <put_your_key_key>
     EC2_AWS_SECRET_ACCESS_KEY = <put_your_secret_key_here>
 
+Now call `ec2-to-ssh` with the 'dev' identifier:
+
+	$ ec2-to-ssh dev
 
 ## Auto-update your SSH configuration
 
 Simply create a shell function and add that to your shell configuration file (e.g. `~/.bashrc`):
 
 	function update-ssh() {
-	    EC2_AWS_ACCESS_KEY=<LIVE_KEY> EC2_AWS_SECRET_ACCESS_KEY=<LIVE_SECRET_KEY> ec2-to-ssh live > ${HOME}/.ssh/config.liveplatform
-	    EC2_AWS_ACCESS_KEY=<DEV_KEY> EC2_AWS_SECRET_ACCESS_KEY=<DEV_SECRET_KEY> ec2-to-ssh dev > ${HOME}/.ssh/config.devplatform
+	    EC2_AWS_ACCESS_KEY=<LIVE_KEY>  EC2_AWS_SECRET_ACCESS_KEY=<LIVE_SECRET_KEY>  ec2-to-ssh live  > ${HOME}/.ssh/config.liveplatform
+	    EC2_AWS_ACCESS_KEY=<DEV_KEY>   EC2_AWS_SECRET_ACCESS_KEY=<DEV_SECRET_KEY>   ec2-to-ssh dev   > ${HOME}/.ssh/config.devplatform
 	    EC2_AWS_ACCESS_KEY=<STAGE_KEY> EC2_AWS_SECRET_ACCESS_KEY=<STAGE_SECRET_KEY> ec2-to-ssh stage > ${HOME}/.ssh/config.stageplatform
 
 	    touch ${HOME}/.ssh/config
@@ -91,4 +98,4 @@ This way I don't overwrite all my other SSH configurations as these are simply i
 
 ## TODO
 
-- Provide DEV, LIVE, STAGE section in `settings.cfg` so that different configurations can be managed
+- dev, live, stage is available now ... but, possibly, there is a nicer solution.
