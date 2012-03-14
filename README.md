@@ -94,7 +94,19 @@ Simply create a shell function and add that to your shell configuration file (e.
 
 Now, all I need to do before logging in into an EC2 instance is to call `update-ssh`.
 
-*NOTE:* `ec2-to-ssh` needs to be in your path when calling `update-ssh` (which might not be if you are using `virtualenv`).
+*NOTE:* `ec2-to-ssh` needs to be in your path when calling `update-ssh`!
+
+### Using virtualenv
+
+Simply source your `activate` script of your virtualenv at the beginning of the function:
+
+	function update-ssh() {
+		source ${WORKON_HOME}/ec2ssh/bin/activate
+
+        [... update-ssh function content ...]
+
+        deactivate
+    }
 
 ## TODO
 
