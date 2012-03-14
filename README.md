@@ -34,7 +34,7 @@ for the corresponding EC2 environment:
     SSH_PORT = 22
     SSH_USER = ubuntu
 
-If you like you can set a prefix for all hostnames of a given EC2 environment. E.g. for your
+If you like you can set a prefix for all hostnames of a given EC2 environment. For instance, for your
 DEV environment, you would like all hostnames to start with "dev-". To accomplish this, simply add a prefix
 in the corresponding `settings.<ec2_env>.cfg` file
 
