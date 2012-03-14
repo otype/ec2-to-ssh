@@ -52,7 +52,10 @@ You have 3 possible environments to choose (add as parameter to `ec2-to-ssh`):
  2. dev
  3. stage
 
-Calling `ec2-to-ssh` with one of the given environment identifiers will load the appropriate settings file.
+Calling `ec2-to-ssh` with one of the given environment identifiers will load the appropriate settings file:
+
+	$ ec2-to-ssh dev
+
 
 ### Setting EC2 ACCESS/SECRET KEYS
 
